@@ -22,15 +22,39 @@ document.getElementById("lista").innerHTML=html;
 
 }
 
+
 document.getElementById("lista").addEventListener("click", function(e){
 
-    html=`<img src=${data.dog[e.target.value].image}><br> 
+    html=`<img id=${e.target.value} src=${data.dog[e.target.value].image}><br> 
           <h1> ${data.dog[e.target.value].name}</h1> 
-          <h1> ${data.dog[e.target.value].nclicks}</h1>  `;
-
+         <h1 id=nclick> ${data.dog[e.target.value].nclicks} </h1> `;
+   
     document.getElementById("dog").innerHTML=html;
+
+    
+    
 })
 
 
+document.getElementById("dog").addEventListener("click", function(e){
 
+    
+    
+    if(e.target.tagName=="IMG"){
+    data.dog[e.target.id].nclicks++;
+
+    document.getElementById("nclick").innerHTML=data.dog[e.target.id].nclicks;
+
+}
+
+}
+
+
+)
+
+
+
+let model;
+let controller;
+let view;
 
