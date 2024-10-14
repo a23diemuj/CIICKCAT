@@ -9,52 +9,153 @@ let data = {
     ]
 };
 
-generarLista();
 
-function generarLista(){
+let model=  {
 
-html="";
-for (let index = 0; index < data.dog.length; index++) {
-    html+=`<li value=${index}>  ${data.dog[index].name}</li> `;    
-}
-document.getElementById("lista").innerHTML=html;
+   init: function(){
+    return data;
+
+   },
+
+   chance: function(a){
+    data.dogActive=a;
+
+   },
+
+   add: function(a){
+    data.dog[a].nclicks++;
+
+   },
+   clickActual:function(a){
+
+    return data.dog[a].nclicks;
+   }
 
 
-}
 
 
-document.getElementById("lista").addEventListener("click", function(e){
 
-    html=`<img id=${e.target.value} src=${data.dog[e.target.value].image}><br> 
-          <h1> ${data.dog[e.target.value].name}</h1> 
-         <h1 id=nclick> ${data.dog[e.target.value].nclicks} </h1> `;
+
+
+};
+let controller={
+
+    init:function(){
+
+
+    view.init();
+
+
+    },
+
+    datos:function () {
+        return model.init();
+    },
+
+    actual:function(){
+       let datos=model.init();
+
+       let obj={
+        actual: datos.dogActive,
+        dog :datos.dog[datos.dogActive]
+
+       }
+       return obj;
+
+    },
+
+    cambiarActual:function(a){
+
+        model.chance(a);
+
+    },
+    aumentarClicks:function(a){
+
+        model.add(a);
+
+    },
+    clickActual:function(a){
+    return model.clickActual(a);
+
+
+    }
+
+
+
+
+};
+let view={
+
+    init:function(){
+
+         view.pintarLista();
+         view.pintarActual();
+        
+
+         document.getElementById("lista").addEventListener("click", function(e){
+
+            controller.cambiarActual(e.target.value);
+            view.pintarActual();
+        
+            
+            
+        })
+
+        document.getElementById("dog").addEventListener("click", function(e){
+
+    
+    
+            if(e.target.tagName=="IMG"){
+              
+             controller.aumentarClicks(e.target.id);   
+                
+             view.clickActual(e.target.id);   
+            
+        
+        }
+        
+        })
+
+
+
+
+
+    },
+
+    pintarLista:function(){
+
+    let lista = controller.datos(); 
+    html="";
+    for (let index = 0; index < lista.dog.length; index++) {
+    html+=`<li value=${index}>  ${lista.dog[index].name}</li> `;    
+    }
+    document.getElementById("lista").innerHTML=html; 
+
+    },
+
+    pintarActual:function(){
+    let dogActual = controller.actual(); 
+    
+
+    let actual= dogActual.actual;
+    let dog=dogActual.dog;
+
+    html=`<img id=${actual} src=${dog.image}><br> 
+          <h1> ${dog.name}</h1> 
+         <h1 id=nclick> ${dog.nclicks} </h1> `;
    
-    document.getElementById("dog").innerHTML=html;
+    document.getElementById("dog").innerHTML=html;    
 
-    
-    
-})
+    },
+    clickActual:function(a){
+        actual=controller.clickActual(a);
 
+        document.getElementById("nclick").innerHTML=actual;
+    }
 
-document.getElementById("dog").addEventListener("click", function(e){
+};
 
-    
-    
-    if(e.target.tagName=="IMG"){
-    data.dog[e.target.id].nclicks++;
-
-    document.getElementById("nclick").innerHTML=data.dog[e.target.id].nclicks;
-
-}
-
-}
+controller.init();
 
 
-)
-
-
-
-let model;
-let controller;
-let view;
 
