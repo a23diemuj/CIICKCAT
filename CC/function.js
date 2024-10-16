@@ -1,3 +1,54 @@
+
+
+
+
+
+ 
+
+ import { createApp, ref , reactive} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+
+
+ createApp({
+
+ setup() {
+
+ const message = ref('Hello Vue!')
+
+ const llista = reactive({gats:[{nom:"garfield"}, {nom:"minino"}, {nom:"gat3"}]})
+
+ const visible = ref(true);
+
+ const url= ref('https://www.institutpedralbes.cat/wp-content/uploads/2021/05/logo.jpg')
+
+ 
+
+ function saluda(id){
+
+ alert(`El gat ${this.llista.gats[id].nom} diu hola`)
+
+ }
+
+
+
+ return {
+
+ message, llista, saluda, visible, url
+
+ }
+
+ }
+
+ }).mount('#appVue')
+
+
+
+
+
+
+
+/*
+
 let data = {
     dogActive: 0,
     dog: [
@@ -159,3 +210,4 @@ controller.init();
 
 
 
+*/

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<div id="appVue">
+
+    {{ message }}
+   
+   
+   
+    <div v-if="visible">
+   
+    <img :src="url" alt="">
+   
+    </div>
+   
+    <button @click="visible=!visible">Mostra/Oculta</button>
+   
+    <ul>
+   
+    <li @click="mostrar(index)" v-for="(actual,index) in llista.dog">
+   
+    {{actual.name}}
+   
+    </li>
+   
+    </ul>
+
+
+    <div id="dog">
+      
+        {{dog}}
+
+    </div>
+   
+</div>
+   
+   
+   
+   <script type="module">
+   
+    import { createApp, ref , reactive} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+   
+   
+   
+    createApp({
+   
+    setup() {
+   
+    const message = ref('Hello Vue!')
+   
+    const llista = reactive({
+    dogActive: 0,
+    dog: [
+        { name: "doggy",  image: "img/dog1.jpeg", nclicks: 0 },
+        { name: "capi",  image: "img/dog2.jpeg", nclicks: 0 },
+        { name: "furus",  image: "img/dog3.jpeg", nclicks: 0 },
+        { name: "bobi",  image: "img/dog4.jpeg", nclicks: 0 },
+        { name: "maxi", image: "img/dog5.jpeg", nclicks: 0 }
+    ]
+})
+   
+    const visible = ref(true);
+   
+    const url= ref('https://www.institutpedralbes.cat/wp-content/uploads/2021/05/logo.jpg')
+   
+    let dog = ref(llista.dog[0].name);
+   
+    function mostrar(id){
+        dog = ref(llista.dog[id].name);
+        console.log(dog.value)
+        return dog.value;
+        
+    }
+   
+   
+   
+    return {
+   
+    message, llista, mostrar, visible, url,dog
+   
+    }
+   
+    }
+   
+    }).mount('#appVue')
+   
+   </script>
+   
+   
+</body>
+</html>
