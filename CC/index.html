@@ -3,21 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAT CLICKER</title>
-   
+    <title>Document</title>
 </head>
 <body>
     
-    <ul id="lista">
+<div id="appVue">
 
-
-
-
-
+   
+   
+   
+   
+   
+   
+    <ul>
+   
+    <li @click="Actualdog(index)" v-for="(actual,index) in llista.dog">
+   
+    {{actual.name}}
+   
+    </li>
+   
     </ul>
 
-    <div id="dog"></div>
 
-    <script src="./function.js"></script>
+    <div id="dog">
+      
+     <h1>  {{dogActual.name}} </h1><br>
+       <img @click="nclicks" :src="dogActual.image" @click> <br>
+      
+      
+    <h1> {{dogActual.nclicks}}</h1>
+
+
+    </div>
+   
+</div>
+   
+   
+   
+   <script type="module">
+   
+    import { createApp, ref , reactive} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+   
+   
+   
+    createApp({
+   
+    setup() {
+   
+   
+   
+    const llista = reactive({
+    dogActive: 0,
+    dog: [
+        { name: "doggy",  image: "img/dog1.jpeg", nclicks: 0 },
+        { name: "capi",  image: "img/dog2.jpeg", nclicks: 0 },
+        { name: "furus",  image: "img/dog3.jpeg", nclicks: 0 },
+        { name: "bobi",  image: "img/dog4.jpeg", nclicks: 0 },
+        { name: "maxi", image: "img/dog5.jpeg", nclicks: 0 }
+    ]
+})
+   
+    let dogActual= reactive({
+        
+
+    });
+
+    function nclicks(){
+        llista.dog[llista.dogActive].nclicks++;
+        dogActual.nclicks=llista.dog[llista.dogActive].nclicks;
+
+
+
+    } 
+    function Actualdog(id){
+
+        llista.dogActive=id;
+        mostrar();
+    }
+
+   
+
+    function mostrar(){
+       
+        dogActual.name= llista.dog[llista.dogActive].name
+        dogActual.image= llista.dog[llista.dogActive].image  
+        dogActual.nclicks= llista.dog[llista.dogActive].nclicks    
+    }
+   
+   
+   
+    return {
+   
+     llista, dogActual,Actualdog,nclicks
+   
+    }
+   
+    }
+   
+    }).mount('#appVue')
+   
+   </script>
+   
+   
 </body>
 </html>
